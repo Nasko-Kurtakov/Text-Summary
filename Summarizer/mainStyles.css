@@ -1,0 +1,21 @@
+.main-text {
+    box-sizing: border-box;
+    height: 60vh !important;
+    resize: none;
+}
+
+.vert-align-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.summarized-text {
+    border: 1px solid green;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.sentenceCountInput{
+    width: 2em;
+}

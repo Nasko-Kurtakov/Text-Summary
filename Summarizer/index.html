@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="./external/bootstrap/bootstrap.css">
+        <link rel="stylesheet" href="./external/bootstrap/bootstrap-grid.css">
+        <link rel="stylesheet" href="./external/bootstrap/bootstrap-reboot.css">
+        <link rel="stylesheet" href="./mainStyles.css">
+    </head>
+    <body class="container mt-3">
+        <div class="row">
+                <div id='mainText' class="col-xl-4">
+                    <form>
+                        <div class="form-group">
+                            <label for="textHeading">Заглавие</label>
+                            <input id='title' data-bind="value:title" type="text" class="form-control" id="textHeading" aria-describedby="textHeader" placeholder="Въведи заглавие на текста">
+                            <small id="textHeader" class="form-text text-muted">Загравието няма да бъде резюмирано.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="mainTextArea">Съдържание</label>
+                            <textarea id="mainTextArea" data-bind="value:text" class="form-control main-text"  placeholder="Въведи съдържание на текста"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-4 text-center vert-align-container">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                            <input id="theMostValuable" type="radio" value="mostValuableSentance" data-bind="checked: mode" aria-label="Radio button for following text input">
+                            </div>
+                        </div>
+                        <label class="form-control" for="theMostValuable">Най-значимо изречение</label>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                            <input id="perParagraph" type="radio" value="mostValuableSentancePerP" data-bind="checked: mode" aria-label="Radio button for following text input">
+                            </div>
+                        </div>
+                        <label class="form-control" for="perParagraph">Най-значимото от всеки параграф</label>
+                    </div>
+                    <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                <input id="mostValuable" value="mostValuableNSentance" type="radio" data-bind="checked: mode" aria-label="Radio button for following text input">
+                                </div>
+                            </div>
+                            <label class="form-control" for="mostValuable">Най-значимите 
+                                <input class="sentenceCountInput" type="text" data-bind="value:numSentences,hasFocus:isEditingNumSentences" aria-label="Text input with radio button"> от текста
+                            </label>
+                    </div>
+                    <div><button data-bind="click:beginSummarize" type="button" id="go" class="btn btn-success">Създай!</button></div>
+                </div>
+                <div class="col-xl-4">
+                    <h2>Резултат</h2>
+                    <div class="summarized-text">
+                        <div class="text-heading" data-bind="text:title"></div>
+                        <div class="text-main-content" data-bind="text:summarizedText"></div>
+                    </div>
+                </div>
+        </div>
+        <script type="text/javascript" src="./external/lodash.js"></script>
+        <script type='text/javascript' src="./external/sanitize-html.min.js"></script>
+        <script type='text/javascript' src="./external/sbd.js"></script>
+        <script type='text/javascript' src="./external/knockout-3.4.2.js"></script>
+        <script type="text/javascript" src="./summarizerModel.js"></script>
+    </body>
+</html>
