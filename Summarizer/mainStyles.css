@@ -16,6 +16,19 @@
     border-radius: 12px;
 }
 
-.sentenceCountInput{
+.sentenceCountInput {
     width: 2em;
+}
+
+.option {
+    margin-bottom: 4px;
+    margin-top:4px;
+}
+
+.option-long {
+    height: calc(4rem + 2px);
+}
+
+.info:first-child {
+    font-weight: bold;
 }

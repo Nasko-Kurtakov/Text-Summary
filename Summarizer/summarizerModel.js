@@ -3,7 +3,10 @@
         var self = this;
         this.text = ko.observable('');
         this.title = ko.observable('');
+        this.sumTitle = ko.observable('');
         this.summarizedText = ko.observable('');
+        this.beforeSentLen = ko.observable(0);
+        this.afterSentLen = ko.observable(0);
 
         this.mode = ko.observable("mostValuableSentancePerP");
         this.numSentences = ko.observable('');
@@ -18,14 +21,15 @@
                 }
             }
             getSentencesRanks(content, (dict) => {
+                self.beforeSentLen(Object.keys(dict).length);
                 splitContentToParagraphs(content, (paragraphs) => {
-                    // summary.push(title); // Store the title.
 
                     paragraphs.forEach((p) => {
                         getBestSentence(p, dict, (sentence) => {
                             if (sentence) summary.push(sentence+"\n");
                         });
-                    })
+                    });
+                    self.afterSentLen(paragraphs.length);
 
                     // If we only have a title, then there is an issue.
                     if (sentence.length === 2) err = true;
@@ -57,9 +61,9 @@
                 case 'mostValuableSentancePerP':{
                     self.summarizePerParagraphs(self.title(),self.text(),function(err,summary){
                         if(err) self.summarizedText("Something went wrong man!");
-                        
+                        self.sumTitle(self.title())
                         self.summarizedText(summary);
-        
+
                         console.log(`Original length - ${self.text().length}`);
                         console.log(`New length - ${self.summarizedText().length}`);
                     });
@@ -67,15 +71,17 @@
                 case 'mostValuableSentance':{
                     self.summarizeInOneSentence(self.title(),self.text(),function(err,summary){
                         if(err) self.summarizedText("Something went wrong man!");
-                        
+                        self.sumTitle(self.title());
                         self.summarizedText(summary);
+                        self.afterSentLen(1);
                     });
                 };break;
                 case 'mostValuableNSentance':{
                     self.summarizeNSentences(self.title(),self.text(),+self.numSentences(),function(err,summary){
                         if(err) self.summarizedText("Something went wrong man!");
-                        
+                        self.sumTitle(self.title());
                         self.summarizedText(summary);
+                        self.afterSentLen(+self.numSentences());
                     });
                 };break;
             }
@@ -91,6 +97,7 @@
                 }
             }
             getSentencesRanks(content, (dict) => {
+                self.beforeSentLen(Object.keys(dict).length);
                 var items = Object.keys(dict).map(function(key) {
                     return [key, dict[key]];
                   }).sort(function(first, second) {
@@ -193,8 +200,8 @@
             if (content.indexOf('.') === -1) {
                 return callback(false)
             }
-        
-            callback(tokenizer.sentences(content, {newline_boundaries: true}) || [])
+            
+            callback(tokenizer.sentences(content, {newline_boundaries: true}) || []);
         }
         
         var splitContentToParagraphs = (content, callback) => {
